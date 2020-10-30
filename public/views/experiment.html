@@ -82,7 +82,7 @@
   // group 1
   // create array of video_ids, remove 0th id, shuffle
   var images_n = 209; // number of videos + 1
-  var images_participant = 1; // number of videos + 1
+  var images_participant = 100; // number of videos + 1
   var image_ids = [];
   for (var i = 0; i <= images_n; i++) {
       image_ids.push(i);
@@ -155,7 +155,6 @@
   timeline.push(instructions_block);
   timeline.push(image_block_slider);
   timeline.push(save_data_block);
-  timeline.push(image_block_slider);
 
   /* MTurk information */
   var turkInfo = jsPsych.turk.turkInfo();
