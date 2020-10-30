@@ -163,7 +163,7 @@ jsPsych.plugins["image-button-response"] = (function() {
       // measure rt
       var end_time = performance.now();
       var rt = end_time - start_time;
-      response.button = choice;
+      response.button = parseInt(choice);
       response.rt = rt;
 
       // after a valid response, the stimulus will have the CSS class 'responded'
@@ -216,8 +216,9 @@ jsPsych.plugins["image-button-response"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         end_trial();
       }, trial.trial_duration);
+    } else if (trial.response_ends_trial === false) {
+      console.warn("The experiment may be deadlocked. Try setting a trial duration or set response_ends_trial to true.");
     }
-
   };
 
   return plugin;
