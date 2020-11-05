@@ -169,11 +169,7 @@ if (debug) {
   image_ids = shuffle(image_ids);
   var image_ids_slice = image_ids.slice(0, images_participant);
 
-  // console.log(finish_code);
-  // console.log(image_ids);
-  // console.log(image_ids_slice);
-
-    /* define instructions block */
+  /* define instructions block */
   var instructions_block = {
     type: 'html-keyboard-response',
     stimulus: '<p>The purpose of this research is to determine overall human threat perception of dash camera images.</p><p>You will view 100 images. Each image will be on a separate page. For each image you will need to answer one question by moving a slider. To advance to the next image, the slider needs to be moved. The window of your browser should be at least 1300px wide and 800px tall. Press \'C\' to proceed to the first image.</p>',
@@ -241,6 +237,17 @@ if (debug) {
   timeline.push(instructions_block);
   timeline.push(image_block_slider);
   timeline.push(save_data_block);
+
+  /* output debug information */
+  if (debug) {
+    console.log('finish_code', finish_code);
+    console.log('image_ids', image_ids);
+    console.log('image_ids_slice', image_ids_slice);
+    console.log('timeline', timeline);
+    console.log('instructions_block', instructions_block);
+    console.log('image_block_slider', image_block_slider);
+    console.log('between_blocks', between_blocks);
+  }
 
   /* MTurk information */
   var turkInfo = jsPsych.turk.turkInfo();
