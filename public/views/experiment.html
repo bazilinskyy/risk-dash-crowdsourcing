@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Images from dashcam videos</title>
+    <title>Treat perception in images from dash cams</title>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
     <script src='jsPsych/jspsych.js'></script>
     <script src='jsPsych/plugins/jspsych-html-keyboard-response.js'></script>
@@ -76,13 +76,12 @@
       return a;
   }
 
-  // video_prefix = 'https://videos-animations-crowdsourced.s3.eu-central-1.amazonaws.com/video_';
   var image_prefix = 'img/stimuli/';
 
   // group 1
-  // create array of video_ids, remove 0th id, shuffle
-  var images_n = 209; // number of videos + 1
-  var images_participant = 100; // number of videos + 1
+  // create array of image_ids, remove 0th id, shuffle
+  var images_n = 209; // number of images + 1
+  var images_participant = 2; // number of images + 1
   var image_ids = [];
   for (var i = 0; i <= images_n; i++) {
       image_ids.push(i);
