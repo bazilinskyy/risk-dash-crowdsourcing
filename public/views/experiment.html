@@ -174,7 +174,7 @@ if (debug) {
   /* define instructions block */
   var instructions_block = {
     type: 'html-keyboard-response',
-    stimulus: '<p>The purpose of this research is to determine overall human threat perception of dash camera images.</p><p>You will view ' + images_participant + ' images. Each image will be on a separate page. For each image you will need to answer one question by moving a slider. To advance to the next image, the slider needs to be moved. The window of your browser should be at least 1300px wide and 800px tall. Press \'C\' to proceed to the first image.</p>',
+    stimulus: '<p>The purpose of this research is to determine perceived risk of dash camera images.</p><p>You will view ' + images_participant + ' images. Each image will be on a separate page. For each image you will need to answer one question by moving a slider. To advance to the next image, the slider needs to be moved. The window of your browser should be at least 1300px wide and 800px tall. Press \'C\' to proceed to the first image.</p>',
     choices: ['C'],
     on_finish: function(data){
       jsPsych.data.addDataToLastTrial({
@@ -206,7 +206,7 @@ if (debug) {
     labels: ['0', '2', '4', '6', '8', '10'],
     slider_width: 1000,
     // labels: ['Not intuitive at all', 'Completely intuitive'],
-    prompt: "<p style='width: 1000px'>How risky is this situation on a scale from 0 to 10 (0 = no risk, 10 = extreme risk)?</p>",
+    prompt: "<p style='width: 1000px'>As a driver, how risky do you believe this situation is, on a scale from 0 (no risk) to 10 (extreme risk)?</p>",
     require_movement: true,
     // response_ends_trial: true,
     on_finish: function(){
