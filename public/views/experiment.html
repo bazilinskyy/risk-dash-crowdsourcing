@@ -244,8 +244,6 @@ if (debug) {
               });
           }
       });
-      // save data
-      image_stimuli.push(save_data_block);
   }
 
 // block for sending data
@@ -259,8 +257,9 @@ var save_data_block = {
   /* create experiment timeline array */
   var timeline = [];
   timeline.push(instructions_block);
-  for (var i = 0; i < image_stimuli.length; i++) {
-    timeline.push(image_stimuli[i])
+  for (var i = 0; i < images_participant; i++) {
+    timeline.push(image_stimuli[i]);
+    timeline.push(save_data_block);
   }
 
   /* output debug information */
