@@ -238,6 +238,9 @@ if (debug) {
           on_finish: function(){
               var progress_value = jsPsych.getProgressBarCompleted() + 1/images_participant;
               jsPsych.setProgressBar(progress_value); // set progress bar to 85% full.
+              jsPsych.data.addDataToLastTrial({
+                  worker_code: finish_code
+              });
           }
       });
       // save data
