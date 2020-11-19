@@ -257,6 +257,7 @@ var save_data_block = {
   /* create experiment timeline array */
   var timeline = [];
   timeline.push(instructions_block);
+  timeline.push(save_data_block);
   for (var i = 0; i < images_participant; i++) {
     timeline.push(image_stimuli[i]);
     timeline.push(save_data_block);
