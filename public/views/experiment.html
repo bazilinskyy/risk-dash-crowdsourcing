@@ -47,9 +47,42 @@
     }
   };
 
+ /**
+ * Save data.
+ */
+function saveData() {
+    // check if data needs to be saved
+    if (save_data) {
+        if (debug) {
+            console.log('saving data', jsPsych.data.get().json());
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/experiment-data',
+            data: jsPsych.data.get().json(),
+            contentType: 'application/json'
+        })
+        .done(function() {
+            jsPsych.data.reset();
+        })
+        .fail(function() {
+            alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
+            window.location.href = '/';
+        })
+        if (debug) {
+            console.log('data saved');
+        }
+    }
+}
+
 var debug = getUrlParameter('debug');
 if (!debug) {
     debug = SHOW_DEBUG;
+}
+
+var save_data = getUrlParameter('save_data');
+if (!save_data) {
+    save_data = SAVE_DATA;
 }
 
 // Arrays for storing data
@@ -189,20 +222,32 @@ if (debug) {
     }
   };
 
-  /* dynamically build a list of images for block 1 */
+  /* dynamically build a list of images */
+  var image_stimuli = [];
   for (var i = 0; i < images_participant; i++) {
       image_name = image_prefix + image_ids_slice[i] + '.png';
-      test_stimuli_1.push(
-      {
-        // preamble: '<img src=\'' + image_name + '\'>'
-        stimulus: image_name
-      }
-    );
+      image_stimuli.push({
+          type: 'image-slider-response',
+          stimulus: image_name
+          labels: ['0', '2', '4', '6', '8', '10'],
+          slider_width: 1000,
+          // labels: ['Not intuitive at all', 'Completely intuitive'],
+          prompt: "<p style='width: 1000px'>As a driver, how risky would you judge this situation (0 = no risk, 10 = extreme risk)?</p>",
+          require_movement: true,
+          // response_ends_trial: true,
+          on_finish: function(){
+              var progress_value = jsPsych.getProgressBarCompleted() + 1/images_participant;
+              jsPsych.setProgressBar(progress_value); // set progress bar to 85% full.
+          }
+      });
+      // save data
+      image_stimuli.push(save_data_block);
   }
+
 
   var image_block_slider = {
     type: 'image-slider-response',
-    timeline: test_stimuli_1,
+    stimulus: image_name
     labels: ['0', '2', '4', '6', '8', '10'],
     slider_width: 1000,
     // labels: ['Not intuitive at all', 'Completely intuitive'],
@@ -215,30 +260,20 @@ if (debug) {
     }
   };
 
-  var save_data_block = {
+// block for sending data
+var save_data_block = {
     type: 'call-function',
-    func:  function() {
-      $.ajax({
-          type: 'POST',
-          url: '/experiment-data',
-          data: jsPsych.data.get().json(),
-          contentType: 'application/json'
-        })
-        .done(function() {
-          jsPsych.data.reset();
-        })
-        .fail(function() {
-          alert('A problem occurred while writing to the database. Please contact the researcher for more information.')
-          window.location.href = '/';
-        })
-      }
-  }
+    func: function() {
+        saveData(); // save data
+    }
+}
 
   /* create experiment timeline array */
   var timeline = [];
   timeline.push(instructions_block);
-  timeline.push(image_block_slider);
-  timeline.push(save_data_block);
+  for (var i = 0; i < image_stimuli.length; i++) {
+    timeline.push(image_stimuli[i])
+  }
 
   /* output debug information */
   if (debug) {
@@ -249,15 +284,6 @@ if (debug) {
     console.log('instructions_block', instructions_block);
     console.log('image_block_slider', image_block_slider);
   }
-
-  /* MTurk information */
-  var turkInfo = jsPsych.turk.turkInfo();
-  if(turkInfo.previewMode && !turkInfo.outsideTurk) {
-    worker_id = turkInfo.workerId;
-  } else {
-    worker_id = String(Date.now());
-  }
-  timestamp = String(Date.now());
 
   /* Start the experiment */
   jsPsych.init({
