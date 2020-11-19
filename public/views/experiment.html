@@ -247,22 +247,6 @@ if (debug) {
       image_stimuli.push(save_data_block);
   }
 
-
-  var image_block_slider = {
-    type: 'image-slider-response',
-    stimulus: image_name
-    labels: ['0', '2', '4', '6', '8', '10'],
-    slider_width: 1000,
-    // labels: ['Not intuitive at all', 'Completely intuitive'],
-    prompt: "<p style='width: 1000px'>As a driver, how risky would you judge this situation (0 = no risk, 10 = extreme risk)?</p>",
-    require_movement: true,
-    // response_ends_trial: true,
-    on_finish: function(){
-        var progress_value = jsPsych.getProgressBarCompleted() + 1/images_participant;
-        jsPsych.setProgressBar(progress_value); // set progress bar to 85% full.
-    }
-  };
-
 // block for sending data
 var save_data_block = {
     type: 'call-function',
